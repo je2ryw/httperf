@@ -951,6 +951,16 @@ core_init(void)
 		exit(1);
 	}
 
+	/* Disable the FD_SETSIZE check for now - perhaps only enforce on libevent select()? */
+	#if 1
+	if (rlimit.rlim_max > FD_SETSIZE) {
+		fprintf(stderr, "%s: warning: open file limit > FD_SETSIZE; "
+			"limiting max. # of open files to FD_SETSIZE\n",
+			prog_name);
+		rlimit.rlim_max = FD_SETSIZE;
+	}
+	#endif
+
 	rlimit.rlim_cur = rlimit.rlim_max;
 	if (setrlimit(RLIMIT_NOFILE, &rlimit) < 0) {
 		fprintf(stderr,
