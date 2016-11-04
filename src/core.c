@@ -1546,7 +1546,7 @@ core_loop(void)
 	            }
 	            mask = ((u_long) mask) >> 1;
 	            ++sd;
-	        } while (mask);
+	        } while (mask && sd <= max_sd);
 	    }
 	}
 }
